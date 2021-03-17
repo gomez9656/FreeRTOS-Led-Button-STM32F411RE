@@ -68,11 +68,11 @@ int main(void)
 void led_task_handler(void *params){
 
 	while(1){
-
 		if(button_status_flag == PRESSED){
 
 			//turn on the LED
 			GPIO_WriteBit(GPIOA, GPIO_Pin_5, Bit_SET);
+
 
 		} else{
 
@@ -86,6 +86,17 @@ void button_task_handler(void *params){
 
 	while(1){
 
+		if(GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_13)){
+
+			//button is not pressed
+			button_status_flag = NOT_PRESSED;
+
+		}else{
+
+			//button is pressed
+			button_status_flag = PRESSED;
+
+		}
 	}
 }
 
