@@ -16,6 +16,10 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
+#define TRUE			1
+#define FALSE			0
+#define	NOT_PRESSED		FALSE
+#define PRESSED			TRUE
 
 static void prvSetupUart(void);
 static void prvSetupGPIO(void);
@@ -26,6 +30,7 @@ char usr_msg[250];
 void led_task_handler(void *params);
 void button_task_handler(void *params);
 
+uint8_t button_status_flag = NOT_PRESSED;
 
 int main(void)
 {
@@ -64,6 +69,16 @@ void led_task_handler(void *params){
 
 	while(1){
 
+		if(button_status_flag == PRESSED){
+
+			//turn on the LED
+			GPIO_WriteBit(GPIOA, GPIO_Pin_5, Bit_SET);
+
+		} else{
+
+			//turn off the LED
+			GPIO_WriteBit(GPIOA, GPIO_Pin_5, Bit_RESET);
+		}
 	}
 }
 
